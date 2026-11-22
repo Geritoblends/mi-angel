@@ -103,13 +103,21 @@ html.light,html.light body{background:var(--paper)}
 
   /* ---------- collage layout: random, scattered, slightly rotated polaroids ---------- */
   function randomLayout(){
-    var W = window.innerWidth, H = window.innerHeight, u = Math.min(W, H), m = u * 0.06;
+    var W = window.innerWidth, H = window.innerHeight, u = Math.min(W, H), m = u * 0.03;
     var n = photos.length;
+    var cols = Math.ceil(Math.sqrt(n));
+    var rows = Math.ceil(n / cols);
+    var gw = (W - 2 * m) / cols, gh = (H - 2 * m) / rows;
+    var jit = Math.min(gw, gh) * 0.12;
     return photos.map(function(p, i){
-      var h = u * (0.03 + 0.06 * Math.random());
+      var col = i % cols, row = Math.floor(i / cols);
+      var hmax = Math.min(gh - m, (gw - m) / p.ar);
+      var h = Math.min(u * (0.1 + 0.45 * Math.random()), hmax);
       var w = p.ar * h;
-      var x = m + Math.random() * Math.max(0, W - 2 * m - w);
-      var y = m + (H - 2 * m) * (i + 0.5 + (Math.random() - 0.5) * 1.2) / (n + 1);
+      var x = m + col * gw + (Math.random() - 0.5) * jit;
+      var y = m + row * gh + (Math.random() - 0.5) * jit;
+      x = Math.min(Math.max(x, m), W - m - w);
+      y = Math.min(Math.max(y, m), H - m - h);
       return { x: x, y: y, w: w, h: h };
     });
   }
