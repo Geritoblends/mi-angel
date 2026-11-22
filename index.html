@@ -15,7 +15,7 @@
   --serif:"Cormorant Garamond","Cormorant",Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:#fff;-webkit-font-smoothing:antialiased}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);-webkit-font-smoothing:antialiased}
 html.light,html.light body{background:var(--paper)}
 
 .intro{
@@ -33,7 +33,7 @@ html.light,html.light body{background:var(--paper)}
 .line{
   font-family:var(--serif);font-style:italic;font-weight:400;
   font-size:clamp(1.4rem,3.5vw,3.3rem);line-height:1.18;letter-spacing:.005em;
-  color:#121316;text-align:left;max-width:11.5em;
+  color:var(--text);text-align:left;max-width:11.5em;
 }
 .w{display:inline-block;white-space:nowrap}
 .ch{position:relative;opacity:0}
@@ -103,12 +103,13 @@ html.light,html.light body{background:var(--paper)}
 
   /* ---------- collage layout: random, scattered, slightly rotated polaroids ---------- */
   function randomLayout(){
-    var W = window.innerWidth, H = window.innerHeight, u = Math.min(W, H), m = u * 0.03;
-    return photos.map(function(p){
-      var h = u * (0.1 + 0.45 * Math.random());
+    var W = window.innerWidth, H = window.innerHeight, u = Math.min(W, H), m = u * 0.06;
+    var n = photos.length;
+    return photos.map(function(p, i){
+      var h = u * (0.03 + 0.06 * Math.random());
       var w = p.ar * h;
       var x = m + Math.random() * Math.max(0, W - 2 * m - w);
-      var y = m + Math.random() * Math.max(0, H - 2 * m - h);
+      var y = m + (H - 2 * m) * (i + 0.5 + (Math.random() - 0.5) * 1.2) / (n + 1);
       return { x: x, y: y, w: w, h: h };
     });
   }
