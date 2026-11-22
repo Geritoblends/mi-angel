@@ -50,6 +50,7 @@ html.light,html.light body{background:var(--paper)}
   transform-origin:50% 50%;will-change:transform,opacity;
   user-select:none;-webkit-user-drag:none;pointer-events:none;
   box-sizing:border-box;
+  object-fit:cover;
   background:#fff;              /* white polaroid, same as the page */
   border:1px solid #fff;
   
@@ -112,7 +113,7 @@ html.light,html.light body{background:var(--paper)}
     return photos.map(function(p, i){
       var col = i % cols, row = Math.floor(i / cols);
       var hmax = Math.min(gh - m, (gw - m) / p.ar);
-      var h = Math.min(u * (0.1 + 0.45 * Math.random()), hmax);
+      var h = Math.min(u * (0.35 + 0.20 * Math.random()), hmax);
       var w = p.ar * h;
       var x = m + col * gw + (Math.random() - 0.5) * jit;
       var y = m + row * gh + (Math.random() - 0.5) * jit;
